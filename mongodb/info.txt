@@ -2,6 +2,6 @@
 
 The latest version of the MongoDBs used for
  our research can be downloaded at 
-https://zenodo.org/record/6451900#.YlV3qnspAQ8.
+https://zenodo.org/record/6451900#.YlV3qnspAQ8
  Please contact me shennanweiss@gmail.com 
 for requests for raw data. 
