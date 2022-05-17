@@ -7,4 +7,4 @@ Scientificreportsinstaophfo refers to https://www.nature.com/articles/s41598-021
 
 BraincommFRnetwork  refers to Shennan A Weiss, Tomas Pastore, Iren Orosz, Daniel Rubinstein, Richard Gorniak, Zachary Waldman, Itzhak Fried, Chengyuan Wu, Ashwini Sharan, Diego Slezak, Gregory Worrell, Jerome Engel, Jr, Michael R. Sperling, Richard J Staba, Graph theoretical measures of fast ripples support the epileptic network hypothesis, Brain Communications, 2022;, fcac101, https://doi.org/10.1093/braincomms/fcac101
 
-PropagatingFR refers to Delta Oscillation Coupled Propagating Fast Ripples Precede Epileptiform Discharges. MedRxiv pending. 
+PropagatingFR refers to Delta Oscillation Coupled Propagating Fast Ripples Precede Epileptiform Discharges. https://www.researchsquare.com/article/rs-1640013/v1
