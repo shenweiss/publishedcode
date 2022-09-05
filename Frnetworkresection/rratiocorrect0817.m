@@ -1,4 +1,4 @@
-;
+rr=[];
 rr350=[];
 for i=1:23
     [idx,~]=find(frono_table.patients_frono==i);
@@ -52,12 +52,13 @@ ID_sorted=[ALLPATIENTS(idx) ALLPATIENTS(idx2)];
 youden=Y+(1-X)-1;
 [~,idx]=max(youden);
 cutoff=T(idx);
-positives=find(ALLrrsorted>cutoff);
+positives=find(ALLrrsorted>=cutoff);
 negatives=find(ALLrrsorted<cutoff);
 posclas=find(sortedCODED==1);
 negclas=find(sortedCODED==0);
 FP=numel(intersect(positives,negclas));
 FP_ID_e1=ID_sorted(intersect(positives,negclas))
+positives_ID=[ID_sorted(positives)]
 TN=numel(intersect(negatives,negclas));
 TP=numel(intersect(positives,posclas));
 FN=numel(intersect(negatives,posclas));

@@ -17,6 +17,7 @@ title('lambda ratio')
 
 % ROC
 nulls=[4 13 15 17 19];
+rrpos=[1	2	3	5	6	7	8	9	10	11	12	14  21	23]; 
 PATIENTS_nulls=ALLPATIENTS(nulls);
 PATIENT_nonulls=ALLPATIENTS;
 PATIENT_nonulls(nulls)=[];
@@ -33,7 +34,7 @@ szfree(nulls)=[];
 youden=Y_lambda_e1+(1-X_lambda_e1)-1;
 [~,idx]=max(youden);
 cutoff=T(idx);
-positives=find(lambda_nr_roc<=cutoff);
+positives=find(lambda_nr_roc>=cutoff);
 negatives=find(lambda_nr_roc<cutoff);
 posclas=find(szfree==1);
 negclas=find(szfree==0);
@@ -49,6 +50,30 @@ for i=1:5
    lambda_e1_out{1,i}=[num2str(round(metrics(i),3)) ' ' num2str(round(ci(i,1),2)) ' ' num2str(round(ci(i,2),2))];
 end;
 
+% ROC reflex
+szfree_reflex=vertcat(ones(10,1),zeros(13,1));
+szfree_reflex=szfree_reflex(rrpos);
+lambda_nr_roc_reflex=lambda_nr;
+lambda_nr_roc_reflex=lambda_nr_roc_reflex(rrpos);
+[X_lambda_e1_reflex,Y_lambda_e1_reflex,T] = perfcurve(szfree_reflex,lambda_nr_roc_reflex,1);
+youden=Y_lambda_e1_reflex+(1-X_lambda_e1_reflex)-1;
+[~,idx]=max(youden);
+cutoff=T(idx);
+positives=find(lambda_nr_roc_reflex>=cutoff);
+negatives=find(lambda_nr_roc_reflex<cutoff);
+posclas=find(szfree_reflex==1);
+negclas=find(szfree_reflex==0);
+FP=numel(intersect(positives,negclas));
+TN=numel(intersect(negatives,negclas));
+TP=numel(intersect(positives,posclas));
+FN=numel(intersect(negatives,posclas));
+TP=TP+1; % PAT4
+FP=FP+4; %PAT
+[metrics ci] = contingency_table(TP,TN,FP,FN)
+lambda_e1_out={''};
+for i=1:5
+   lambda_e1_out{1,i}=[num2str(round(metrics(i),3)) ' ' num2str(round(ci(i,1),2)) ' ' num2str(round(ci(i,2),2))];
+end;
 
 resp=vertcat(ones(13,1),zeros(10,1));
 resp(21)=1;
@@ -162,6 +187,31 @@ positives=find(leff_nr_roc_nr>=cutoff);
 negatives=find(leff_nr_roc_nr<cutoff);
 posclas=find(szfree==1);
 negclas=find(szfree==0);
+FP=numel(intersect(positives,negclas));
+TN=numel(intersect(negatives,negclas));
+TP=numel(intersect(positives,posclas));
+FN=numel(intersect(negatives,posclas));
+TP=TP+1; % PAT4,13
+FP=FP+4; %PAT
+[metrics ci] = contingency_table(TP,TN,FP,FN)
+leff_nr_e1_out={''};
+for i=1:5
+   leff_nr_e1_out{1,i}=[num2str(round(metrics(i),3)) ' ' num2str(round(ci(i,1),2)) ' ' num2str(round(ci(i,2),2))];
+end;
+
+%ROC reflex
+leff_nr_roc_nr_reflex=values(rrpos);
+szfree_reflex=vertcat(ones(10,1),zeros(13,1));
+szfree_reflex=szfree_reflex(rrpos);
+[rho,p,rsq,Pfit] = spearman(szfree_reflex,leff_nr_roc_nr_reflex)
+[X_le_nr_e1_reflex,Y_le_nr_e1_reflex,T] = perfcurve(szfree_reflex,leff_nr_roc_nr_reflex,1);
+youden=Y_le_nr_e1_reflex+(1-X_le_nr_e1_reflex)-1;
+[~,idx]=max(youden);
+cutoff=T(idx);
+positives=find(leff_nr_roc_nr_reflex>=cutoff);
+negatives=find(leff_nr_roc_nr_reflex<cutoff);
+posclas=find(szfree_reflex==1);
+negclas=find(szfree_reflex==0);
 FP=numel(intersect(positives,negclas));
 TN=numel(intersect(negatives,negclas));
 TP=numel(intersect(positives,posclas));
