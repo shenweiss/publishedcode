@@ -165,7 +165,11 @@ for i=1:numel(RESP)
  collection = "HFOs";
  test_query=['{"patient_id":"' RESP{i} '"}'];
  blocks=distinct(conn, collection, 'file_block','query',test_query);
- blocks=cellfun(@str2num, blocks);
+ if iscell(blocks)
+     blocks=cell2mat(blocks);
+ else
+     blocks=cellfun(@str2num, blocks);
+ end;
  
  for j=1:numel(unique_electrodes)
  in=[];    
@@ -197,7 +201,6 @@ for i=1:numel(RESP)
  
  in = [in_frono in_frons];
  in = sort(in,'ascend');
- 
  if numel(in) == 0
    for k=1:numel(unique_electrodes)
       fripple_dmi_matrix(j,k)=inf;
